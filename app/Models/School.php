@@ -20,4 +20,13 @@ class School extends Model
     public function colleges() {
         return $this->hasMany(College::class);
     }
+
+    static public function UpdateProgramCount(){
+        foreach(School::all() as $s){
+            $s->program_degree = Program::ProgramCount($s->id, Program::TYPE_DEGREE);
+            $s->program_master = Program::ProgramCount($s->id, Program::TYPE_MASTER);
+            $s->program_doctor = Program::ProgramCount($s->id, Program::TYPE_DOCTOR);
+            $s->save();
+        }
+    }
 }

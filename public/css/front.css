@@ -16,6 +16,11 @@ footer {
 .header .logo {
     height: 50px;
     width: 50px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
 }
 
 .sys_name {
@@ -32,6 +37,21 @@ footer {
     padding: 10px 0;
     background-color: white;
 }
+
+.programs>div {
+    margin: 0 4px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+
+/*********************************************************/
 
 
 /* school cards */
@@ -190,4 +210,9 @@ footer {
 
 .team-content {
     border-top: #cdcdcd solid 1px;
+    border-bottom: #cdcdcd solid 1px;
+}
+
+.team-numbers {
+    padding: 10px 0;
 }

@@ -2,6 +2,7 @@
     <div class="container">
         <form>
         <div class="d-flex flex-row justify-content-end align-items-center">
+        <!--
             <div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
@@ -26,11 +27,13 @@
                     <label class="form-check-label" for="inlineRadio3">全部</label>
                 </div>
             </div>
+            -->
             <div>
                 <div class="input-group">
                     <input type="search" class="form-control rounded" placeholder="搜索专业" aria-label="Search"
                         aria-describedby="search-addon" />
                     <button type="button" class="btn btn-outline-primary">搜索</button>
+                    <button type="button" class="btn btn-outline-primary">清除</button>
                 </div>
             </div>
         </div>
