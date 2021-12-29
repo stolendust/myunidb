@@ -21,6 +21,18 @@ class School extends Model
         return $this->hasMany(College::class);
     }
 
+    public function programs(){
+        return $this->hasMany(Program::class);
+    }
+
+    public function programsFilteredByName($keyword){
+        return $this->programs()
+            ->where('en_name', 'like', '%' . $keyword . '%')
+            ->orWhere('name', 'like', '%'. $keyword . '%')
+            ->orderBy('typeid')
+            ->get();
+    }
+
     /**
      * find the schools with program name containing $search
      */

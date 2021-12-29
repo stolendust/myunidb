@@ -9,14 +9,14 @@
     <title>马来西亚院校数据库</title>
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/front.css" rel="stylesheet">
+    <link href="{{ asset('css/front.css')}}" rel="stylesheet">
 </head>
 
 <body>
     @include('layout.partials.header')
-    @include('layout.partials.nav')
     @yield('content')
     @include('layout.partials.footer')
+    @yield('script')
 </body>
 
 </html>

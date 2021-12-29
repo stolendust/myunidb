@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SchoolController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
-Route::post('/search', [App\Http\Controllers\HomeController::class, 'search']);
+Route::get('/', [HomeController::class, 'index']);
+Route::post('/search', [HomeController::class, 'search']);
 
+Route::get('/school/{id}', [SchoolController::class, 'index']);
+Route::post('/school/search', [SchoolController::class, 'search']);
 

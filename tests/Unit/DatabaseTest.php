@@ -54,4 +54,17 @@ class DatabaseTest extends TestCase
         $schools_music = Models\School::SearchByProgram('音乐');
         $this->assertTrue(count($schools) > count($schools_music));
     }
+
+    public function test_filter_programs_of_school(){
+        $schools = Models\School::SearchByProgram('business');
+
+        $s = $schools[0];
+        $this->assertTrue(count($s->programs) > 0);
+
+        $programs = $s->programsFilteredByName('busine');
+        foreach($programs as $p){
+            #echo $p->typeid . " / " . $p->en_name . PHP_EOL;
+        }
+        $this->assertTrue(count($programs) > 0);
+    }
 }
