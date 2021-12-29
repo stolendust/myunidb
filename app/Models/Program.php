@@ -16,6 +16,11 @@ class Program extends Model
     protected $guarded = [];
     protected $table = "unidb_program";
 
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
     public function college()
     {
         return $this->belongsTo(College::class);

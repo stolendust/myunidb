@@ -40,4 +40,18 @@ class DatabaseTest extends TestCase
         $school = Models\School::find($school->id);
         $this->assertTrue($school->program_master > 0);
     }
+
+    public function test_search_school_by_program(){
+        $schools = Models\School::SearchByProgram('business');
+
+        $this->assertNotEmpty($schools);
+        $this->assertTrue($schools[0]->program_master > 0);
+
+        /* filtered program count is less than the total */
+        $s = Models\School::find($schools[0]->id);
+        $this->assertTrue($schools[0]->program_master < $s->program_master);
+
+        $schools_music = Models\School::SearchByProgram('音乐');
+        $this->assertTrue(count($schools) > count($schools_music));
+    }
 }

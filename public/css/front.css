@@ -34,8 +34,8 @@ footer {
 }
 
 .toolbar {
-    padding: 10px 0;
     background-color: white;
+    padding-bottom: 6px;
 }
 
 .programs>div {
@@ -48,6 +48,10 @@ footer {
 
 .fs-14 {
     font-size: 14px;
+}
+
+a {
+    text-decoration: none !important;
 }
 
 
