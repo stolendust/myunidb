@@ -1,38 +1,47 @@
 @extends('layout.mainlayout')
-@section('content')
-<section class="toolbar">
-    <div class="container">
-        <form method="POST" action="/search">
-            @csrf
-            <div class="d-flex flex-row justify-content-end align-items-center">
-                <div>
-                    <div class="input-group">
-                        <input type="search" name="search" value="{{$search}}" class="form-control rounded" placeholder="搜索专业"
-                            aria-label="Search" aria-describedby="search-addon" />
-                        <button type="submit" class="btn btn-outline-primary">搜索</button>
-                        <button type="button" class="btn btn-outline-primary"><a href="/">重置</a></button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
-<section class="school_info">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">校名</div>
-        <div class="col-sm-3">{{$school->name}}</div>
-        <div class="col-sm-3">是否公立</div>
-        <div class="col-sm-3">@if($school->is_public) 公立 @else 私立 @endif</div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">英文名</div>
-        <div class="col-sm-3">{{$school->en_name}}</div>
-        <div class="col-sm-3">简称</div>
-        <div class="col-sm-3">{{$school->short_name}}</div>
-    </div>
-</div>
 
-</section>
+@section("head_ext")
+<link href="https://cdn.bootcdn.net/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" rel="stylesheet">
+@endsection
+
+@section('content')
+    <section class="school_info rounded">
+        <div class="text-center mt-2 mb-4"><h2>{{$school->name}}</h2></div>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-4 col-sm-2 fw-bold">校名</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->name }}</div>
+                <div class="col-4 col-sm-2 fw-bold">是否公立</div>
+                <div class="col-8 col-sm-4 text-start">@if ($school->is_public) 公立 @else 私立 @endif</div>
+                <div class="col-4 col-sm-2 fw-bold">英文名</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->en_name }}</div>
+                <div class="col-4 col-sm-2 fw-bold">简称</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->short_name }}</div>
+                <div class="col-4 col-sm-2 fw-bold">创建时间</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->create_time}}</div>
+                <div class="col-4 col-sm-2 fw-bold">学校官网</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->website}}</div>
+                <div class="col-4 col-sm-2 fw-bold">全球排名</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->global_sort}}</div>
+                <div class="col-4 col-sm-2 fw-bold">亚洲排名</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->asia_sort}}</div>
+                <div class="col-4 col-sm-2 fw-bold">老师数量</div>
+                <div class="col-8 col-sm-4 text-start">{{ number_format($school->teacher_count)}}</div>
+                <div class="col-4 col-sm-2 fw-bold">学生数量</div>
+                <div class="col-8 col-sm-4 text-start">{{ number_format($school->student_count)}}</div>
+                <div class="col-4 col-sm-2 fw-bold">本科生数量</div>
+                <div class="col-8 col-sm-4 text-start">{{ number_format($school->undergraduate_count) }}</div>
+                <div class="col-4 col-sm-2 fw-bold">研究生数量</div>
+                <div class="col-8 col-sm-4 text-start">{{ number_format($school->postgraduate_count)}}</div>
+                <div class="col-4 col-sm-2 fw-bold">校长</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->principal}}</div>
+                <div class="col-4 col-sm-2 fw-bold">副校长</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->vice_principal}}</div>
+            </div>
+        </div>
+    </section>
 @endsection
 <b></b>
+@section('script')
+<script src="https://cdn.bootcdn.net/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+@endsection

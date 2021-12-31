@@ -63,7 +63,7 @@ class DatabaseTest extends TestCase
 
         $programs = $s->programsFilteredByName('busine');
         foreach($programs as $p){
-            #echo $p->typeid . " / " . $p->en_name . PHP_EOL;
+            #echo $p->level. " / " . $p->en_name . PHP_EOL;
         }
         $this->assertTrue(count($programs) > 0);
     }

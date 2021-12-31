@@ -29,7 +29,7 @@ class School extends Model
         return $this->programs()
             ->where('en_name', 'like', '%' . $keyword . '%')
             ->orWhere('name', 'like', '%'. $keyword . '%')
-            ->orderBy('typeid')
+            ->orderBy('level')
             ->get();
     }
 
@@ -38,8 +38,8 @@ class School extends Model
      */
     static public function SearchByProgram($search)
     {
-        $sql = "select school_id, typeid, count(id) as c from unidb_program
-            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, typeid";
+        $sql = "select school_id, level, count(id) as c from unidb_program
+            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, level";
         $result = \DB::select($sql);
 
         $schools = [];
@@ -50,11 +50,11 @@ class School extends Model
                 $s = School::find($p->school_id);
             }
 
-            if ($p->typeid == Program::TYPE_DEGREE){
+            if ($p->level == Program::TYPE_DEGREE){
                 $s->program_degree = $p->c;
-            }else if($p->typeid == Program::TYPE_MASTER){
+            }else if($p->level == Program::TYPE_MASTER){
                 $s->program_master = $p->c;
-            }else if($p->typeid == Program::TYPE_DOCTOR){
+            }else if($p->level == Program::TYPE_DOCTOR){
                 $s->program_doctor = $p->c;
             }
             $schools[$p->school_id] = $s;

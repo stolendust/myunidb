@@ -9,9 +9,10 @@ class Program extends Model
 {
     use HasFactory;
 
-    const TYPE_DEGREE = 1;
-    const TYPE_MASTER = 2;
-    const TYPE_DOCTOR = 3;
+    const TYPE_DIPLOMA = 4;
+    const TYPE_DEGREE = 6;
+    const TYPE_MASTER = 7;
+    const TYPE_DOCTOR = 8;
 
     protected $guarded = [];
     protected $table = "unidb_program";
@@ -27,7 +28,7 @@ class Program extends Model
     }
 
     static public function ProgramCount($school_id, $type){
-        return Program::where('school_id', $school_id)->where('typeid', $type)->count();
+        return Program::where('school_id', $school_id)->where('level', $type)->count();
     }
 
     static public function UpdateSchoolId(){
