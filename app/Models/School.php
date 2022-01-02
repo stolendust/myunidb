@@ -33,6 +33,21 @@ class School extends Model
             ->get();
     }
 
+    public function programsFilteredByLevel($level,$search=""){
+        $query = $this->programs()
+            ->with('college:name,en_name,id')
+            ->select('name', 'en_name',  'mode','school_years','tuition_total', 'college_id', 'ielts', 'intakes')
+            ->where('level', $level);
+
+        if(!empty($search)){
+            $query->where(function($q) use($search){
+               $q->where('en_name', 'like', '%' . $search. '%')
+                ->orWhere('name', 'like', '%'. $search. '%');
+           });
+        }
+        return $query->get();
+    }
+
     /**
      * find the schools with program name containing $search
      */
@@ -48,13 +63,16 @@ class School extends Model
                 $s = $schools[$p->school_id];
             }else{
                 $s = School::find($p->school_id);
+                $s->program_degree = 0;
+                $s->program_master = 0;
+                $s->program_doctor = 0;
             }
 
-            if ($p->level == Program::TYPE_DEGREE){
+            if ($p->level == Program::LEVEL_DEGREE){
                 $s->program_degree = $p->c;
-            }else if($p->level == Program::TYPE_MASTER){
+            }else if($p->level == Program::LEVEL_MASTER){
                 $s->program_master = $p->c;
-            }else if($p->level == Program::TYPE_DOCTOR){
+            }else if($p->level == Program::LEVEL_DOCTOR){
                 $s->program_doctor = $p->c;
             }
             $schools[$p->school_id] = $s;
@@ -67,9 +85,9 @@ class School extends Model
      */
     static public function UpdateProgramCount(){
         foreach(School::all() as $s){
-            $s->program_degree = Program::ProgramCount($s->id, Program::TYPE_DEGREE);
-            $s->program_master = Program::ProgramCount($s->id, Program::TYPE_MASTER);
-            $s->program_doctor = Program::ProgramCount($s->id, Program::TYPE_DOCTOR);
+            $s->program_degree = Program::ProgramCount($s->id, Program::LEVEL_DEGREE);
+            $s->program_master = Program::ProgramCount($s->id, Program::LEVEL_MASTER);
+            $s->program_doctor = Program::ProgramCount($s->id, Program::LEVEL_DOCTOR);
             $s->save();
         }
     }

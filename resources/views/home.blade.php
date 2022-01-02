@@ -37,26 +37,11 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        // jquery extend function
-        $.extend({
-            redirectPost: function(location, args) {
-                var form = '';
-                $.each(args, function(key, value) {
-                    value = value.split('"').join('\"')
-                    form += '<input type="hidden" name="' + key + '" value="' + value + '">';
-                });
-                form += '@csrf';
-                $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo($(document
-                    .body)).submit();
-            }
-        });
-
         $(document).ready(function() {
             $('.our-team').click(function() {
-                $.redirectPost("school/search", {
-                    search: $('#search').val(),
-                    school_id: $(this).attr('id')
-                });
+                $("#school_id").val($(this).attr('id'));
+                $("#form_search").attr("action", "/school/search");
+                $("#form_search").submit();
             });
         });
     </script>

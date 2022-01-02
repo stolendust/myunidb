@@ -18,6 +18,7 @@
     @include('layout.partials.nav')
     @yield('content')
     @include('layout.partials.footer')
+
     @yield('script')
 </body>
 

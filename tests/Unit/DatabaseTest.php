@@ -62,9 +62,28 @@ class DatabaseTest extends TestCase
         $this->assertTrue(count($s->programs) > 0);
 
         $programs = $s->programsFilteredByName('busine');
-        foreach($programs as $p){
-            #echo $p->level. " / " . $p->en_name . PHP_EOL;
-        }
         $this->assertTrue(count($programs) > 0);
+        $p = $programs[0];
+        echo $p->level. " / " . $p->en_name . PHP_EOL;
+    }
+
+    public function test_fetch_programs_by_level(){
+        $level = Models\Program::LEVEL_DEGREE;
+        $school = Models\School::first();
+
+        $retProgram = Models\Program::findBySchoolAndLevel($school->id,$level);
+        $this->assertTrue(count($retProgram) > 0);
+        echo $retProgram[0]->college->name;
+        echo PHP_EOL;
+
+        ////////////////////////////////
+        $retSchool = $school->programsFilteredByLevel($level);
+        $this->assertEquals(count($retProgram), count($retSchool));
+        echo $retSchool[0]->college->name;
+        echo PHP_EOL;
+
+        $retSchoolSearch = $school->programsFilteredByLevel($level, "business");
+        $this->assertTrue(count($retSchoolSearch) < count($retSchool));
+        file_put_contents('tests/test_ret.html', json_encode($retSchoolSearch));
     }
 }

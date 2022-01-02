@@ -8,11 +8,6 @@ footer {
     font-size: small;
 }
 
-.header {
-    background-color: white;
-    padding: 15px 0;
-}
-
 .header .logo {
     height: 50px;
     width: 50px;
@@ -31,11 +26,6 @@ footer {
 .sys_name b {
     font-size: 22px;
     font-weight: bold;
-}
-
-.toolbar {
-    background-color: white;
-    padding-bottom: 6px;
 }
 
 .programs>div {
@@ -226,14 +216,13 @@ a {
 /*************************************
 /* school detail */
 
-.school_info {
-    margin: 30px 20px;
-    padding: 20px 10px;
-    background-color: white;
+.school_info .row>div {
+    margin-bottom: 4px;
+    padding-top: 4px;
+    border-top: #efefef solid 1px;
+    font-size: 0.9em;
 }
 
-.school_info .row>div {
-    margin-bottom: 7px;
-    padding-top: 7px;
-    border-top: #efefef solid 1px;
+table.table td {
+    font-size: 0.9em;
 }

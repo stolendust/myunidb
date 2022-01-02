@@ -1,4 +1,4 @@
-<section class="header">
+<section class="header py-2 bg-light">
     <div class="container">
         <div class="align-items-center d-flex flex-row ">
             <div class="">
@@ -9,4 +9,5 @@
                 <div>马中教育协会出品，联合翼助建设维护</div>
             </div>
         </div>
+    </div>
 </section>

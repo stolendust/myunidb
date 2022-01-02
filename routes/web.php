@@ -17,6 +17,6 @@ use App\Http\Controllers\SchoolController;
 Route::get('/', [HomeController::class, 'index']);
 Route::post('/search', [HomeController::class, 'search']);
 
-Route::get('/school/{id}', [SchoolController::class, 'index']);
 Route::post('/school/search', [SchoolController::class, 'search']);
+Route::post('/school/fetch', [SchoolController::class, 'fetch']);
 

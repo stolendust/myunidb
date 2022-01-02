@@ -9,10 +9,10 @@ class Program extends Model
 {
     use HasFactory;
 
-    const TYPE_DIPLOMA = 4;
-    const TYPE_DEGREE = 6;
-    const TYPE_MASTER = 7;
-    const TYPE_DOCTOR = 8;
+    const LEVEL_DIPLOMA = 4;
+    const LEVEL_DEGREE = 6;
+    const LEVEL_MASTER = 7;
+    const LEVEL_DOCTOR = 8;
 
     protected $guarded = [];
     protected $table = "unidb_program";
@@ -27,12 +27,27 @@ class Program extends Model
         return $this->belongsTo(College::class);
     }
 
-    static public function ProgramCount($school_id, $type){
+    /**********************************************************
+     * static functions
+     ***********************************************************/
+
+    public function findBySchoolAndLevel($school_id, $level)
+    {
+        return Program::with('college:name,id')
+            ->select('name', 'en_name', 'school_years','tuition_total', 'college_id')
+            ->where('school_id', $school_id)
+            ->where('level', $level)
+            ->get();
+    }
+
+    public static function ProgramCount($school_id, $type)
+    {
         return Program::where('school_id', $school_id)->where('level', $type)->count();
     }
 
-    static public function UpdateSchoolId(){
-        foreach(Program::all() as $p){
+    public static function UpdateSchoolId()
+    {
+        foreach (Program::all() as $p) {
             $p->school_id = $p->college->school_id;
             $p->save();
         }
