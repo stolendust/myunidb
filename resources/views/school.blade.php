@@ -164,21 +164,26 @@
                 if($.isEmptyObject(json)){
                     table.remove();
                 }
+                console.log('data loaded:' + table.attr('id'));
                 $('#'+table.attr('id')+'_count').html('('+json.length+')');
+
+                if(table.attr('id') == "programs_degree"){
+                    dt_options.ajax.data.level = 7;
+                    $('#programs_master').DataTable(dt_options)
+                        .on( 'xhr', function ( e, settings, json ) { eventAjax(json, $(this));});
+                }
+
+                if(table.attr('id') == "programs_master"){
+                    dt_options.ajax.data.level = 8;
+                    $('#programs_doctor').DataTable(dt_options)
+                        .on( 'xhr', function ( e, settings, json ) { eventAjax(json, $(this));});
+                }
             };
 
             dt_options.ajax.data.search = $("#search").val();
             dt_options.ajax.data.level = 6;
 
             $('#programs_degree').DataTable(dt_options)
-                .on( 'xhr', function ( e, settings, json ) { eventAjax(json, $(this));});
-
-            dt_options.ajax.data.level = 7;
-            $('#programs_master').DataTable(dt_options)
-                .on( 'xhr', function ( e, settings, json ) { eventAjax(json, $(this));});
-
-            dt_options.ajax.data.level = 8;
-            $('#programs_doctor').DataTable(dt_options)
                 .on( 'xhr', function ( e, settings, json ) { eventAjax(json, $(this));});
         });
     </script>
