@@ -8,15 +8,10 @@ use Illuminate\Support\Facades\Log;
 
 class SchoolController extends Controller
 {
-    public function index(Request $request, $id)
+    public function index(Request $request, $shortname)
     {
-        $school = School::find($id);
-        if (empty($school)) {
-            abort(403, 'No such school:' . $id);
-        }
-
-        $datas = ["school" => $school,
-            'search' => ""];
+        $school = School::where('short_name', $shortname)->firstOrFail();
+        $datas = ["school" => $school, 'search' => ''];
         return view('school', $datas);
     }
 

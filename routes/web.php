@@ -19,4 +19,5 @@ Route::post('/search', [HomeController::class, 'search']);
 
 Route::post('/school/search', [SchoolController::class, 'search']);
 Route::post('/school/fetch', [SchoolController::class, 'fetch']);
+Route::get('/school/index/{shortname}', [SchoolController::class, 'index']);
 

@@ -7,7 +7,7 @@
 @section('content')
     <section class="school_info rounded my-4 mx-3 py-2 bg-light">
         <div class="text-center">
-            <h4>{{ $school->name }}</h4>
+            <h5><b>{{ $school->name }}</b></h4>
         </div>
         <div class="container">
             <div class="row text-center">
@@ -44,7 +44,7 @@
     </section>
     <section class="school_programs  rounded my-2 mx-3 py-1 px-2 bg-light">
         <div class="text-center pt-1">
-            <h5>本科专业</h5>
+            <h5>本科专业<label id="programs_degree_count"></label></h5>
         </div>
         <table id="programs_degree" class="table table-striped nowrap" width="100%">
             <thead>
@@ -64,7 +64,7 @@
     </section>
     <section class="school_programs  rounded my-2 mx-3 py-1 px-2 bg-light">
         <div class="text-center pt-1">
-            <h5>硕士方向</h5>
+            <h5>硕士方向<label id="programs_master_count"></label></h5>
         </div>
         <table id="programs_master" class="table table-striped nowrap" width="100%">
             <thead>
@@ -84,7 +84,7 @@
     </section>
     <section class="school_programs rounded my-2 mx-3 py-1 px-2 bg-light">
         <div class="text-center pt-1">
-            <h5>博士方向</h5>
+            <h5>博士方向<label id="programs_doctor_count"></label></h5>
         </div>
         <table id="programs_doctor" class="table table-striped nowrap" width="100%">
             <thead>
@@ -162,10 +162,9 @@
             // remove display section when data is empty
             var eventAjax = function(json, table){
                 if($.isEmptyObject(json)){
-                    table.parents('.school_programs').remove();
-                }else if(json.length < 10){
-                    $('.dataTables_paginate').hide();
+                    table.remove();
                 }
+                $('#'+table.attr('id')+'_count').html('('+json.length+')');
             };
 
             dt_options.ajax.data.search = $("#search").val();
