@@ -4,7 +4,7 @@
             @csrf
             <div class="d-flex align-items-center flex-wrap pb-1">
                 <div class="col-md-4 pe-2">
-                    <span> <a href="/">Home</a> </span>
+                    <span> <a href="/">HOME</a> </span>
                     @isset($school)
                         <span> / {{ $school->short_name }}</span>
                     @endisset

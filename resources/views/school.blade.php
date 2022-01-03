@@ -22,7 +22,7 @@
                 <div class="col-4 col-sm-2 fw-bold">创建时间</div>
                 <div class="col-8 col-sm-4 text-start">{{ $school->create_time }}</div>
                 <div class="col-4 col-sm-2 fw-bold">学校官网</div>
-                <div class="col-8 col-sm-4 text-start">{{ $school->website }}</div>
+                <div class="col-8 col-sm-4 text-start"><a href="{{ $school->website }}" target="_blank"> {{ $school->website }}</a></div>
                 <div class="col-4 col-sm-2 fw-bold">全球排名</div>
                 <div class="col-8 col-sm-4 text-start">{{ $school->global_sort }}</div>
                 <div class="col-4 col-sm-2 fw-bold">亚洲排名</div>
