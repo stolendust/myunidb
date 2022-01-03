@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UnidbController;
 use App\Http\Controllers\SchoolController;
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,8 @@ use App\Http\Controllers\SchoolController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
-Route::post('/search', [HomeController::class, 'search']);
+Route::get('/', [UnidbController::class, 'index']);
+Route::post('/search', [UnidbController::class, 'search']);
 
 Route::post('/school/search', [SchoolController::class, 'search']);
 Route::post('/school/fetch', [SchoolController::class, 'fetch']);

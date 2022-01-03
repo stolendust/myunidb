@@ -14,10 +14,10 @@
 </head>
 
 <body>
-    @include('layout.partials.header')
-    @include('layout.partials.nav')
+    @include('unidb.partials.header')
+    @include('unidb.partials.nav')
     @yield('content')
-    @include('layout.partials.footer')
+    @include('unidb.partials.footer')
 
     @yield('script')
 </body>

@@ -1,4 +1,4 @@
-@extends('layout.mainlayout')
+@extends('unidb.mainlayout')
 @section('content')
     <section id="team" class="team_member section-padding">
         <div class="container">

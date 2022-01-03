@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 
 use App\Models\School;
 
-class HomeController extends Controller
+class UnidbController extends Controller
 {
     public function index(){
         $schools = School::orderByRaw('-global_sort DESC')->get();
-        return view('home', ["schools" => $schools, "search" => ""]);
+        return view('unidb', ["schools" => $schools, "search" => ""]);
     }
 
     public function search(Request $request){
         $search = $request->input('search');
         $schools = School::SearchByProgram($search);
-        return view('home', ["schools" => $schools, 'search' => $search]);
+        return view('unidb', ["schools" => $schools, 'search' => $search]);
     }
 }
