@@ -21,3 +21,12 @@ Route::post('/school/search', [SchoolController::class, 'search']);
 Route::post('/school/fetch', [SchoolController::class, 'fetch']);
 Route::get('/school/index/{shortname}', [SchoolController::class, 'index']);
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/school', [App\Http\Controllers\Admin\ModelController::class, 'index']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
