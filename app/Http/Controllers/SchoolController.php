@@ -31,7 +31,7 @@ class SchoolController extends Controller
            return json_encode(['error' => 'ajax is needed']);
         }
 
-        $level = $request->get("level");
+        $level = $request->get("mqf_level");
         $school_id = $request->get("school_id");
         $search = $request->get("search");
 

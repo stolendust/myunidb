@@ -36,13 +36,13 @@ class Program extends Model
         return Program::with('college:name,id')
             ->select('name', 'en_name', 'school_years','tuition_total', 'college_id')
             ->where('school_id', $school_id)
-            ->where('level', $level)
+            ->where('mqf_level', $level)
             ->get();
     }
 
     public static function ProgramCount($school_id, $type)
     {
-        return Program::where('school_id', $school_id)->where('level', $type)->count();
+        return Program::where('school_id', $school_id)->where('mqf_level', $type)->count();
     }
 
     public static function UpdateSchoolId()

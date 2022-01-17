@@ -7,6 +7,21 @@ use App\Models;
 
 class DatabaseTest extends TestCase
 {
+    public function test_table_structure(){
+        $school = new Models\School;
+        $cs = Models\ModelHelper::ColumnNameAndComment($school->getTable());
+        $this->assertTrue(count($cs) > 0);
+
+        // convert object's properties into dictionary
+        $data = array_map( function($o){ return (array)$o; }, $cs);
+        $this->assertTrue(count($data) > 0);
+        $this->assertEquals($cs[0]->name, $data[0]['name']);
+
+        $cs = Models\ModelHelper::ColumnNameAndComment('unidb_program');
+        $this->assertTrue(count($cs) > 0);
+        $this->assertEquals($cs[0]->name, $data[0]['name']);
+    }
+
     public function test_fetch()
     {
         $school = Models\School::first();
@@ -64,7 +79,7 @@ class DatabaseTest extends TestCase
         $programs = $s->programsFilteredByName('busine');
         $this->assertTrue(count($programs) > 0);
         $p = $programs[0];
-        echo $p->level. " / " . $p->en_name . PHP_EOL;
+        echo $p->mqf_level. " / " . $p->en_name . PHP_EOL;
     }
 
     public function test_fetch_programs_by_level(){

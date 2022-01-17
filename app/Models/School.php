@@ -25,11 +25,15 @@ class School extends Model
         return $this->hasMany(Program::class);
     }
 
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
+
     public function programsFilteredByName($keyword){
         return $this->programs()
             ->where('en_name', 'like', '%' . $keyword . '%')
             ->orWhere('name', 'like', '%'. $keyword . '%')
-            ->orderBy('level')
+            ->orderBy('mqf_level')
             ->get();
     }
 
@@ -37,7 +41,7 @@ class School extends Model
         $query = $this->programs()
             ->with('college:name,en_name,id')
             ->select('name', 'en_name',  'mode','school_years','tuition_total', 'college_id', 'ielts', 'intakes')
-            ->where('level', $level);
+            ->where('mqf_level', $level);
 
         if(!empty($search)){
             $query->where(function($q) use($search){
@@ -53,8 +57,8 @@ class School extends Model
      */
     static public function SearchByProgram($search)
     {
-        $sql = "select school_id, level, count(id) as c from unidb_program
-            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, level";
+        $sql = "select school_id, mqf_level, count(id) as c from unidb_program
+            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, mqf_level";
         $result = \DB::select($sql);
 
         $schools = [];
@@ -68,11 +72,11 @@ class School extends Model
                 $s->program_doctor = 0;
             }
 
-            if ($p->level == Program::LEVEL_DEGREE){
+            if ($p->mqf_level == Program::LEVEL_DEGREE){
                 $s->program_degree = $p->c;
-            }else if($p->level == Program::LEVEL_MASTER){
+            }else if($p->mqf_level == Program::LEVEL_MASTER){
                 $s->program_master = $p->c;
-            }else if($p->level == Program::LEVEL_DOCTOR){
+            }else if($p->mqf_level == Program::LEVEL_DOCTOR){
                 $s->program_doctor = $p->c;
             }
             $schools[$p->school_id] = $s;

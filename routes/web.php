@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UnidbController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\Admin\ModelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,8 +26,8 @@ Route::get('/school/index/{shortname}', [SchoolController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/school', [App\Http\Controllers\Admin\ModelController::class, 'index']);
+Route::get('/admin/{model}', [ModelController::class, 'index']);
+Route::post('/admin/list', [ModelController::class, 'list']);
+Route::post('/admin/show/{model}/{id}', [ModelController::class, 'show']);
+Route::post('/admin/edit/{model}/{id}', [ModelController::class, 'edit']);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\ModelHelper;
 use App\Models\School;
+use Illuminate\Http\Request;
 
 class ModelController extends Controller
 {
@@ -14,33 +15,68 @@ class ModelController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * fetch data through ajax, supporting server side pagination
      */
-    public function index()
-    {
-        //return 'Vista index()';
-        $schools= School::all();
-        return view('admin.model.index')->with('schools',$schools);
+    function list(Request $request) {
+        if (!$request->ajax()) {
+            return json_encode(['error' => 'ajax is needed']);
+        }
+
+        $model = $request->input("model");
+        $tableName = 'unidb_'.$model;
+        $table = \DB::table($tableName);
+
+        $columnNameAndComment = ModelHelper::ColumnNameAndComment($tableName);
+        $columns = array_map(function ($c) {return $c->name;}, $columnNameAndComment);
+
+        $totalData = $table->count();
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        // fetch data
+        if (empty($request->input('search.value'))) {
+            $list = $table->offset($start)->limit($limit)->orderBy($order, $dir)->get();
+        } else {
+            $search = $request->input('search.value');
+            $list = $table->where('en_name', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            $totalFiltered = $table->where('en_name', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->count();
+        }
+
+        $data = [];
+        foreach ($list as $item) {
+            $data[] = (array) $item;
+        }
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data,
+        );
+        echo json_encode($json_data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    ///////////////////////////////////////////////////////////////
+
+    public function index(Request $request, $model)
     {
-        return view('school.create');
+        $tableName = 'unidb_' . $model;
+        $columns = ModelHelper::ColumnNameAndComment($tableName);
+        return view('admin.model.index')->with('columns', $columns)->with('model', $model);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $schools = new School();
@@ -50,56 +86,23 @@ class ModelController extends Controller
         return redirect('/schools');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($model, $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit($mode, $id)
     {
-         $school = School::find($id);
-         return view('school.edit')->with('school',$school);
+        $school = School::find($id);
+        return view('school.edit')->with('school', $school);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $model, $id)
     {
         $school = School::find($id);
         $schools->name = $request->get('name');
         $schools->en_name = $request->get('en_name');
         $school->save();
-
-        return redirect('/schools');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $school = School::find($id);
-        $school->delete();
 
         return redirect('/schools');
     }

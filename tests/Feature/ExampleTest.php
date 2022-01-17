@@ -26,6 +26,6 @@ class ExampleTest extends TestCase
         $school = School::all()->random();
         $response = $this->post('/school/fetch',
             ['level'=>Program::LEVEL_DEGREE,'school_id'=>$school->id]);
-        #$response->assertStatus(200);
+        $response->assertStatus(200);
     }
 }
