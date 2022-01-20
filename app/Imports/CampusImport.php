@@ -99,7 +99,13 @@ class CampusImport implements ToCollection, WithEvents, SkipsUnknownSheets
         $translate = function ($nameCN) {return $nameCN ? self::$format['program'][trim($nameCN)] : '';};
         $namesEN = array_map($translate, $namesCN);
 
+        // 获取字段定义
         $this->columns = ModelHelper::ColumnNameAndComment((new Program)->getTable());
+        $result = array();
+        array_walk($this->columns, function ($value, $key) use (&$result) {
+            $result[$value->name] = $value;
+        });
+        $this->columns = $result;
 
         //导入本校数据
         $collection = $collection->skip(2);
@@ -144,6 +150,7 @@ class CampusImport implements ToCollection, WithEvents, SkipsUnknownSheets
         $college->en_name = $names[1];
         $college->school_name = $this->currentCampus->school_name;
         $college->updated_at = now();
+        $college->school()->associate($this->currentSchool);
         $college->campus()->associate($this->currentCampus);
         $college->save();
         Log::debug("import college:" . $names[0] . '/' . $college->id);
