@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+storage/logs/laravel.log
+*.log
+*.log
+storage/logs/laravel.log
