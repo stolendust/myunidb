@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -237,19 +237,24 @@ return [
             'text'       => ' 院校',
             'icon'       => 'fas fa-landmark',
             'icon_color' => 'cyan',
-            'url'        => '/admin/school',
+            'url'        => '/admin/m/school',
         ],
         [
             'text'       => ' 科系',
             'icon'       =>  'fas fa-hotel',
             'icon_color' => 'cyan',
-            'url'        => '/admin/college',
+            'url'        => '/admin/m/college',
         ],
         [
             'text'       => '专业',
             'icon' => 'fas fa-graduation-cap',
             'icon_color' => 'cyan',
-            'url'        => '/admin/program',
+            'url'        => '/admin/m/program',
+        ],
+        [
+            'text' => '数据导入',
+            'url'  => '/admin/import',
+            'icon' => 'fas fa-file-import',
         ],
         [
             'text' => '修改密码',
@@ -412,3 +417,6 @@ return [
 
     'livewire' => false,
 ];
+
+
+

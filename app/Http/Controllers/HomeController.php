@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+
+use App\Models\School;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function index(){
+        $schools = School::orderByRaw('-sort_global DESC')->get();
+        return view('unidb', ["schools" => $schools, "search" => ""]);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return redirect('/admin/school');
-        #return view('home');
+    public function search(Request $request){
+        $search = $request->input('search');
+        $schools = School::SearchByProgram($search);
+        return view('unidb', ["schools" => $schools, 'search' => $search]);
     }
 }

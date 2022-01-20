@@ -25,4 +25,14 @@ class College extends Model
     public function programs() {
         return $this->hasMany(Program::class);
     }
+
+    public static function findOrCreate($campus_id, $name)
+    {
+        $obj = static::where('campus_id', $campus_id)->where('name',$name)->first();
+        if(!$obj){
+            $obj = new static;
+            $obj->name = $name;
+        }
+        return $obj;
+    }
 }

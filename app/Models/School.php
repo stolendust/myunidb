@@ -52,6 +52,14 @@ class School extends Model
         return $query->get();
     }
 
+    public function updateProgramCount(){
+        $this->program_degree = Program::ProgramCount($this->id, Program::LEVEL_DEGREE);
+        $this->program_master = Program::ProgramCount($this->id, Program::LEVEL_MASTER);
+        $this->program_doctor = Program::ProgramCount($this->id, Program::LEVEL_DOCTOR);
+        $this->save();
+    }
+
+
     /**
      * find the schools with program name containing $search
      */
@@ -87,12 +95,19 @@ class School extends Model
     /**
      *  update programs count for all schools
      */
-    static public function UpdateProgramCount(){
+    static public function UpdateProgramCountforAll(){
         foreach(School::all() as $s){
-            $s->program_degree = Program::ProgramCount($s->id, Program::LEVEL_DEGREE);
-            $s->program_master = Program::ProgramCount($s->id, Program::LEVEL_MASTER);
-            $s->program_doctor = Program::ProgramCount($s->id, Program::LEVEL_DOCTOR);
-            $s->save();
+            $s->updateProgramCount();
         }
+    }
+
+    public static function findOrCreate($name)
+    {
+        $obj = static::where('name',$name)->first();
+        if(!$obj){
+            $obj = new static;
+            $obj->name = $name;
+        }
+        return $obj;
     }
 }

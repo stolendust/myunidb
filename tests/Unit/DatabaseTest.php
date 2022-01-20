@@ -15,11 +15,9 @@ class DatabaseTest extends TestCase
         // convert object's properties into dictionary
         $data = array_map( function($o){ return (array)$o; }, $cs);
         $this->assertTrue(count($data) > 0);
-        $this->assertEquals($cs[0]->name, $data[0]['name']);
 
         $cs = Models\ModelHelper::ColumnNameAndComment('unidb_program');
         $this->assertTrue(count($cs) > 0);
-        $this->assertEquals($cs[0]->name, $data[0]['name']);
     }
 
     public function test_fetch()
@@ -31,6 +29,7 @@ class DatabaseTest extends TestCase
         $this->assertTrue($school->colleges->count() > 0);
 
         $program = Models\Program::all()->random();
+        echo 'test_fetch program:' . $program->id;
         $this->assertNotNull($program->college);
         $this->assertNotNull($program->college->campus);
         $this->assertNotNull($program->college->campus->school);
@@ -51,7 +50,7 @@ class DatabaseTest extends TestCase
         $school->program_master = 0;
         $school->save();
 
-        Models\School::UpdateProgramCount();
+        Models\School::UpdateProgramCountforAll();
         $school = Models\School::find($school->id);
         $this->assertTrue($school->program_master > 0);
     }
@@ -88,14 +87,10 @@ class DatabaseTest extends TestCase
 
         $retProgram = Models\Program::findBySchoolAndLevel($school->id,$level);
         $this->assertTrue(count($retProgram) > 0);
-        echo $retProgram[0]->college->name;
-        echo PHP_EOL;
 
         ////////////////////////////////
         $retSchool = $school->programsFilteredByLevel($level);
         $this->assertEquals(count($retProgram), count($retSchool));
-        echo $retSchool[0]->college->name;
-        echo PHP_EOL;
 
         $retSchoolSearch = $school->programsFilteredByLevel($level, "business");
         $this->assertTrue(count($retSchoolSearch) < count($retSchool));

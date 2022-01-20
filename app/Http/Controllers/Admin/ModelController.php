@@ -74,7 +74,7 @@ class ModelController extends Controller
     {
         $tableName = 'unidb_' . $model;
         $columns = ModelHelper::ColumnNameAndComment($tableName);
-        return view('admin.model.index')->with('columns', $columns)->with('model', $model);
+        return view('admin.model')->with('columns', $columns)->with('model', $model);
     }
 
     public function store(Request $request)

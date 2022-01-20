@@ -52,4 +52,14 @@ class Program extends Model
             $p->save();
         }
     }
+
+    public static function findOrCreate($college_id, $name)
+    {
+        $obj = static::where('college_id', $college_id)->where('name',$name)->first();
+        if(!$obj){
+            $obj = new static;
+            $obj->name = $name;
+        }
+        return $obj;
+    }
 }

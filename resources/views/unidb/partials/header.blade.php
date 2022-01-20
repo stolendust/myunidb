@@ -2,7 +2,7 @@
     <div class="container">
         <div class="align-items-center d-flex flex-row ">
             <div class="">
-                <a href="/"> <img class="logo" src="{{ asset('images/unidb.png') }}" /> </a>
+                <a href="/admin"> <img class="logo" src="{{ asset('images/unidb.png') }}" /> </a>
             </div>
             <div class="sys_name">
                 <div class=""><b>马来西亚院校数据库</b></div>
