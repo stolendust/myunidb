@@ -48,6 +48,11 @@ class SchoolImport implements ToCollection, WithEvents
         $school->fill($data);
         $school->save($data);
 
+        Log::info("*** delete all campuses/colleges/programs from school: " . $name);
+        $school->campuses()->delete();
+        $school->colleges()->delete();
+        $school->programs()->delete();
+
         self::$currentSchoolId = $school->id;
     }
 }

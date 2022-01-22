@@ -8,19 +8,15 @@ use Illuminate\Support\Facades\Log;
 
 class SchoolController extends Controller
 {
-    public function index(Request $request, $shortname)
+    public function school(Request $request, $idOrShortName)
     {
-        $school = School::where('short_name', $shortname)->firstOrFail();
-        $datas = ["school" => $school, 'search' => ''];
-        return view('school', $datas);
-    }
+        $search = $request->query('search', '');
+        if(is_numeric($idOrShortName)){
+            $school = School::find($idOrShortName);
+        }else{
+            $school = School::where('short_name', $idOrShortName)->firstOrFail();
+        }
 
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
-        $id = $request->input('school_id');
-
-        $school = School::find($id);
         $datas = ["school" => $school, 'search' => $search];
         return view('school', $datas);
     }

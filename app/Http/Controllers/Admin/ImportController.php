@@ -12,7 +12,7 @@ class ImportController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function get()
     {
         return view('admin.import');
     }

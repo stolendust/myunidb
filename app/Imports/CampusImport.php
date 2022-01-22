@@ -40,40 +40,9 @@ class CampusImport implements ToCollection, WithEvents, SkipsUnknownSheets
         $sheetTitle = $event->getSheet()->getDelegate()->getTitle();
         Log::debug(">> import sheet: " . $sheetTitle);
 
-        $names = self::splitName($sheetTitle);
+        $names = UnidbImport::splitName($sheetTitle);
         self::$campusNameCN = $names[0];
         self::$format = include 'format.php';
-    }
-
-    public static function splitName($name)
-    {
-        if (strpos($name, "/") !== false) {
-            $arr = explode("/", $name);
-            return [trim($arr[0]), trim($arr[1])];
-        }
-
-        $from = ["\r", "\n", "\\", "（", ") "];
-        $to = ["", "", " ", "(", ")"];
-        $name = str_replace($from, $to, $name);
-
-        $arr = preg_split("/([a-zA-Z0-9]+)/", trim($name), 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-        for ($i = count($arr) - 1; $i >= 0; $i--) {
-            // find the last chinese word in the sentence
-            if (mb_strlen($arr[$i], 'utf-8') != strlen($arr[$i])) {
-                break;
-            }
-
-        }
-        $ret = [
-            trim(implode("", array_slice($arr, 0, $i + 1))),
-            trim(implode("", array_slice($arr, $i + 1))),
-        ];
-
-        // only English in name, no Chinese
-        if ($i < 0) {
-            $ret[0] = $ret[1];
-        }
-        return $ret;
     }
 
     //////////////////////////////////////////////////////////
@@ -140,7 +109,7 @@ class CampusImport implements ToCollection, WithEvents, SkipsUnknownSheets
     {
         if($this->_isEmptyRow($row)) return;
 
-        $names = self::splitName($row[0]);
+        $names = UnidbImport::splitName($row[0]);
         if (empty($names[0])) {
             Log::warning("invalid college name: " . var_export($row, true));
             return;
@@ -161,7 +130,7 @@ class CampusImport implements ToCollection, WithEvents, SkipsUnknownSheets
     {
         if($this->_isEmptyRow($row)) return;
 
-        $names = self::splitName($row[0]);
+        $names = UnidbImport::splitName($row[0]);
         $data = [];
         $data['name'] = $names[0];
         $data['en_name'] = $names[1];

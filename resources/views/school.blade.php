@@ -121,7 +121,7 @@
     <script type="text/javascript" src="/DataTables/datatables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#form_search").attr("action", "/school/search");
+            $("#form_search").attr("action", "/school/{{$school->id}}");
             $("#clear").click(function(event) {
                 event.preventDefault();
                 $('#search').val('');
@@ -130,7 +130,7 @@
 
             var dt_options = {
                 ajax: {
-                    url: "/school/fetch",
+                    url: "/fetch",
                     dataSrc: '',
                     type: 'POST',
                     data: {
@@ -247,10 +247,13 @@
             dt_options.ajax.data.search = $("#search").val();
             dt_options.ajax.data.mqf_level = 6;
 
-            $('#programs_degree').DataTable(dt_options)
+            table = $('#programs_degree').DataTable(dt_options)
                 .on('xhr', function(e, settings, json) {
                     eventAjax(json, $(this));
                 });
+
+            //hide column MODE for degree
+            table.column(2).visible( false );
         });
     </script>
 @endsection

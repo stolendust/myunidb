@@ -38,7 +38,7 @@ class ImportTest extends TestCase
         ];
 
         foreach($list as $str){
-            $arr = CampusImport::splitName($str);
+            $arr = UnidbImport::splitName($str);
             $this->assertEquals($arr[0], $cn);
             $this->assertEquals($arr[1], $en);
         }
@@ -47,17 +47,32 @@ class ImportTest extends TestCase
 
         $name = "会计硕士/
 Bachelor of Accounting (Hons) （MACC) ";
-        $arr = CampusImport::splitName($name);
+        $arr = UnidbImport::splitName($name);
         $this->assertEquals($arr[0], "会计硕士");
 
         //////////////////
         $name = " ISDEV / ISDEV	";
-        $arr = CampusImport::splitName($name);
+        $arr = UnidbImport::splitName($name);
         $this->assertEquals($arr[0], "ISDEV");
 
         //////////
         $name = "Department of Data Science";
-        $arr = CampusImport::splitName($name);
+        $arr = UnidbImport::splitName($name);
         $this->assertEquals($arr[0], trim($name));
+
+        ///////////
+        $name = "艺术与社会科学学院 Faculty of Arts and Social Science (FAS)  ";
+        $arr = UnidbImport::splitName($name);
+        $this->assertEquals($arr[0], "艺术与社会科学学院");
+
+        $name = "理学院 Faculty of Science (FSc)  ";
+        $arr = UnidbImport::splitName($name);
+        $this->assertEquals($arr[0], "理学院");
+
+        $name = "马来西亚-日本国际理工学院
+Malaysia – Japan International Institute of Technology";
+        $arr = UnidbImport::splitName($name);
+        $this->assertEquals($arr[0], "马来西亚-日本国际理工学院");
+
     }
 }

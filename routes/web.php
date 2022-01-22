@@ -18,20 +18,18 @@ use App\Http\Controllers\Admin\ModelController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-Route::post('/search', [HomeController::class, 'search']);
+Route::get('/search', [HomeController::class, 'search']);
 
-Route::post('/school/search', [SchoolController::class, 'search']);
-Route::post('/school/fetch', [SchoolController::class, 'fetch']);
-Route::get('/school/index/{shortname}', [SchoolController::class, 'index']);
+Route::get('/school/{idOrShortName}', [SchoolController::class, 'school']);
+Route::post('/fetch', [SchoolController::class, 'fetch']);
 
 Auth::routes();
 
 Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/import', [ImportController::class, 'index']);
+
+Route::get('/admin/import', [ImportController::class, 'get']);
 Route::post('/admin/import', [ImportController::class, 'post']);
 
 Route::get('/admin/m/{model}', [ModelController::class, 'index']);
 Route::post('/admin/r/list', [ModelController::class, 'list']);
-Route::post('/admin/show/{model}/{id}', [ModelController::class, 'show']);
-Route::post('/admin/edit/{model}/{id}', [ModelController::class, 'edit']);
 

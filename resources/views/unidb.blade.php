@@ -39,9 +39,14 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.our-team').click(function() {
-                $("#school_id").val($(this).attr('id'));
-                $("#form_search").attr("action", "/school/search");
-                $("#form_search").submit();
+                var action = "/school/" + $(this).attr('id');
+                var search = $('#search').val().trim();
+                if (search.length > 0){
+                    $("#form_search").attr("action", action);
+                    $("#form_search").submit();
+                }else{
+                    window.location.href = action;
+                }
             });
         });
     </script>

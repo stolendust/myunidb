@@ -24,12 +24,10 @@ class DatabaseTest extends TestCase
     {
         $school = Models\School::first();
         $this->assertNotNull($school);
-        echo 'test_fetch:' . $school->name . PHP_EOL;
         $this->assertTrue($school->campuses->count() > 0);
         $this->assertTrue($school->colleges->count() > 0);
 
         $program = Models\Program::all()->random();
-        echo 'test_fetch:' . $program->id . PHP_EOL;
         $this->assertNotNull($program->college);
         $this->assertNotNull($program->college->campus);
         $this->assertNotNull($program->college->campus->school);

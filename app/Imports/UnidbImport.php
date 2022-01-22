@@ -37,4 +37,43 @@ class UnidbImport implements WithMultipleSheets, WithEvents
         }
         return $sheets;
     }
+
+    public static function splitName($name)
+    {
+        // remove utf-8 space
+        $name = trim(preg_replace('/\xc2\xa0/',' ',$name));
+        $name = trim(preg_replace('/\xe2\x80\x93/','-',$name));
+
+        // remove chars
+        $from = ["\r", "\n", "\t","\\", "（", "）"];
+        $to =   [" ",   " ",  " ", " ",  "(",  ")"];
+        $name = trim(str_replace($from, $to, $name));
+
+        // well formatted name: Chinese / English
+        if (strpos($name, "/") !== false) {
+            $arr = explode("/", $name);
+            if (mb_strlen($arr[1], 'utf-8') != strlen($arr[1])){ // English / Chinese
+                return [trim($arr[1]), trim($arr[0])];
+            }else{
+                return [trim($arr[0]), trim($arr[1])];
+            }
+        }
+
+        // split name to parts and find the latest Chinese part from the end
+        $arr = preg_split("/([a-zA-Z0-9]+)/", $name, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        for ($i = count($arr) - 1; $i >= 0; $i--) {
+            if (mb_strlen($arr[$i], 'utf-8') != strlen($arr[$i])) {
+                $a = trim($arr[$i]);
+                break;
+            }
+        }
+
+        $ret = [
+            trim(implode("", array_slice($arr, 0, $i + 1))),
+            trim(implode("", array_slice($arr, $i + 1))),
+        ];
+        // only English in name, no Chinese
+        if ($i < 0)  $ret[0] = $ret[1];
+        return $ret;
+    }
 }
