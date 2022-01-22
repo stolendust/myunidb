@@ -256,11 +256,13 @@ return [
             'url'  => '/admin/import',
             'icon' => 'fas fa-file-import',
         ],
+        /*
         [
             'text' => '修改密码',
             'url'  => 'password/reset',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        */
     ],
 
     /*
