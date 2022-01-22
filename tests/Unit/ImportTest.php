@@ -15,7 +15,7 @@ class ImportTest extends TestCase
      */
     public function test_import_schools()
     {
-        $path = public_path('/uploads/import/');
+        $path = public_path('/import');
         $files = array_diff(scandir($path), array('.', '..'));
 
         foreach($files as $p)
