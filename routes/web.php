@@ -26,6 +26,7 @@ Route::post('/fetch', [SchoolController::class, 'fetch']);
 Auth::routes();
 
 Route::get('/admin', [AdminController::class, 'index']);
+Route::redirect('/home', '/admin');
 
 Route::get('/admin/import', [ImportController::class, 'get']);
 Route::post('/admin/import', [ImportController::class, 'post']);
