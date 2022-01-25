@@ -29,13 +29,13 @@
                 <div class="col-4 col-sm-2 fw-bold">亚洲排名</div>
                 <div class="col-8 col-sm-4 text-start">{{ $school->sort_asia }}</div>
                 <div class="col-4 col-sm-2 fw-bold">老师数量</div>
-                <div class="col-8 col-sm-4 text-start">{{ number_format($school->teacher_count) }}</div>
+                <div class="col-8 col-sm-4 text-start">@empty($school->teacher_count) - @else {{ number_format($school->teacher_count) }}@endempty</div>
                 <div class="col-4 col-sm-2 fw-bold">学生数量</div>
-                <div class="col-8 col-sm-4 text-start">{{ number_format($school->student_count) }}</div>
+                <div class="col-8 col-sm-4 text-start">@empty($school->student_count) - @else {{ number_format($school->student_count) }}@endempty</div>
                 <div class="col-4 col-sm-2 fw-bold">本科生数量</div>
-                <div class="col-8 col-sm-4 text-start">{{ number_format($school->undergraduate_count) }}</div>
+                <div class="col-8 col-sm-4 text-start">@empty($school->undergraduate_count) - @else {{ number_format($school->undergraduate_count) }} @endempty</div>
                 <div class="col-4 col-sm-2 fw-bold">研究生数量</div>
-                <div class="col-8 col-sm-4 text-start">{{ number_format($school->postgraduate_count) }}</div>
+                <div class="col-8 col-sm-4 text-start">@empty($school->postgraduate_count) - @else {{ number_format($school->postgraduate_count) }} @endempty</div>
                 <div class="col-4 col-sm-2 fw-bold">校长</div>
                 <div class="col-8 col-sm-4 text-start">{{ $school->principal }}</div>
                 <div class="col-4 col-sm-2 fw-bold">副校长</div>

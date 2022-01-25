@@ -8,7 +8,7 @@
                         data-wow-offset="0">
                         <div class="our-team" id="{{ $s->id }}">
                             <div class="team_img">
-                                <img src="images/schools/{{ strtolower($s->short_name) }}.png" alt="team-image">
+                                <img src="images/schools/{{ strtolower($s->short_name) }}.jpg" alt="team-image">
                             </div>
                             <div class="team-content">
                                 <h3 class="title">{{ $s->name }}</h3>
