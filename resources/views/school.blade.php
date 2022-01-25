@@ -25,9 +25,9 @@
                 <div class="col-8 col-sm-4 text-start"><a href="{{ $school->website }}" target="_blank">
                         {{ $school->website }}</a></div>
                 <div class="col-4 col-sm-2 fw-bold">全球排名</div>
-                <div class="col-8 col-sm-4 text-start">{{ $school->global_sort }}</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->sort_global }}</div>
                 <div class="col-4 col-sm-2 fw-bold">亚洲排名</div>
-                <div class="col-8 col-sm-4 text-start">{{ $school->asia_sort }}</div>
+                <div class="col-8 col-sm-4 text-start">{{ $school->sort_asia }}</div>
                 <div class="col-4 col-sm-2 fw-bold">老师数量</div>
                 <div class="col-8 col-sm-4 text-start">{{ number_format($school->teacher_count) }}</div>
                 <div class="col-4 col-sm-2 fw-bold">学生数量</div>
