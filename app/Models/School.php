@@ -66,11 +66,13 @@ class School extends Model
     static public function SearchByProgram($search)
     {
         $sql = "select school_id, mqf_level, count(id) as c from unidb_program
-            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, mqf_level";
+            where name like '%" . $search . "%' or en_name like '%" . $search . "%' group by school_id, mqf_level order by c desc";
         $result = \DB::select($sql);
 
         $schools = [];
         foreach($result as $p){
+            if ($p->mqf_level < Program::LEVEL_DEGREE ) continue;
+
             if (array_key_exists($p->school_id, $schools)){
                 $s = $schools[$p->school_id];
             }else{
