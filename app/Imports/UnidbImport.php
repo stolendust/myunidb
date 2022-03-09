@@ -50,6 +50,16 @@ class UnidbImport implements WithMultipleSheets, WithEvents
         $name = trim(str_replace($from, $to, $name));
 
         // well formatted name: Chinese / English
+        if (strpos($name, "|") !== false) {
+            $arr = explode("|", $name);
+            if (mb_strlen($arr[1], 'utf-8') != strlen($arr[1])){ // English / Chinese
+                return [trim($arr[1]), trim($arr[0])];
+            }else{
+                return [trim($arr[0]), trim($arr[1])];
+            }
+        }
+
+        // well formatted name: Chinese / English
         if (strpos($name, "/") !== false) {
             $arr = explode("/", $name);
             if (mb_strlen($arr[1], 'utf-8') != strlen($arr[1])){ // English / Chinese
